@@ -1,0 +1,29 @@
+
+/* ---------- base ---------- */
+.gc-root, body.gc-root {
+  margin: 0;
+  background: var(--surface-100);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 22px;
+  -webkit-font-smoothing: antialiased;
+}
+.gc-root :focus-visible {
+  outline: 2px solid var(--accent-hud);
+  outline-offset: 2px;
+}
+.gc-muted { color: var(--ink-muted); }
+.gc-panel {
+  background: var(--surface-200);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+}
+.gc-grid {
+  display: grid;
+  gap: var(--space-4);
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+}
+/* hide custom elements until defined, avoids a flash of raw text */
+gc-telemetry-tile:not(:defined), gc-status-badge:not(:defined), gc-button:not(:defined) { visibility: hidden; }

@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ground Control UI — demo</title>
+<link rel="stylesheet" href="../dist/ground-control.css">
+<script src="../dist/ground-control.js" defer></script>
+<style>
+  main { max-width: 960px; margin: 0 auto; padding: var(--space-6) 16px; }
+  header { display: flex; justify-content: space-between; align-items: center; gap: var(--space-4); flex-wrap: wrap; margin-bottom: var(--space-6); }
+  h1, h2 { margin: 0; }
+  section { margin-bottom: var(--space-6); }
+  h2 { margin-bottom: var(--space-4); }
+  .row { display: flex; gap: var(--space-2); flex-wrap: wrap; align-items: center; }
+</style>
+</head>
+<body class="gc-root">
+<main>
+  <header>
+    <div>
+      <h1 class="gc-display">Mission 042</h1>
+      <div class="gc-caption gc-muted">HeeWing T1 · QuadPlane · <span id="clock">--:--:-- UTC</span></div>
+    </div>
+    <gc-status-badge state="ok" id="link">LINK OK</gc-status-badge>
+  </header>
+
+  <section>
+    <h2 class="gc-title">Telemetry</h2>
+    <div class="gc-grid">
+      <gc-telemetry-tile id="alt" label="ALT" value="120" unit="m"></gc-telemetry-tile>
+      <gc-telemetry-tile id="gs" label="GS" value="14.2" unit="m/s"></gc-telemetry-tile>
+      <gc-telemetry-tile id="bat" label="BAT" value="23.8" unit="V" state="ok" status="OK"></gc-telemetry-tile>
+      <gc-telemetry-tile label="SATS" value="17" state="ok" status="3D FIX"></gc-telemetry-tile>
+      <gc-telemetry-tile label="RSSI" value="-71" unit="dBm" state="caution" status="WEAK"></gc-telemetry-tile>
+      <gc-telemetry-tile label="CURR" value="38.4" unit="A"></gc-telemetry-tile>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="gc-title">Status badges</h2>
+    <div class="row">
+      <gc-status-badge state="ok">ARMED</gc-status-badge>
+      <gc-status-badge state="info">AUTO · WP 4/12</gc-status-badge>
+      <gc-status-badge state="caution">GPS DEGRADED</gc-status-badge>
+      <gc-status-badge state="critical">FAILSAFE</gc-status-badge>
+      <gc-status-badge state="idle">DISARMED</gc-status-badge>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="gc-title">Buttons</h2>
+    <div class="row">
+      <gc-button id="sim">Drain battery</gc-button>
+      <gc-button variant="secondary">Export report</gc-button>
+      <gc-button variant="danger">Terminate</gc-button>
+      <gc-button disabled>Upload mission</gc-button>
+    </div>
+  </section>
+
+  <section class="gc-panel">
+    <div class="gc-label gc-muted">Position</div>
+    <div class="gc-data">50.4501 N&nbsp;&nbsp;30.5234 E&nbsp;&nbsp;·&nbsp;&nbsp;HDG 274°</div>
+  </section>
+</main>
+<script>
+  // fake telemetry, so you can see live updates
+  const $ = (id) => document.getElementById(id);
+  let v = 23.8, alt = 120;
+  function batState(volts) {
+    const t = $('bat');
+    t.value = volts.toFixed(1);
+    if (volts < 21.0) { t.setAttribute('state', 'critical'); t.setAttribute('status', 'CRIT'); }
+    else if (volts < 22.2) { t.setAttribute('state', 'caution'); t.setAttribute('status', 'LOW'); }
+    else { t.setAttribute('state', 'ok'); t.setAttribute('status', 'OK'); }
+  }
+  setInterval(() => {
+    alt += (Math.random() - 0.5) * 2;
+    $('alt').value = alt.toFixed(0);
+    $('gs').value = (14 + Math.random()).toFixed(1);
+    $('clock').textContent = new Date().toISOString().slice(11, 19) + ' UTC';
+  }, 1000);
+  $('sim').addEventListener('click', () => { v -= 0.6; if (v < 19.8) v = 23.8; batState(v); });
+</script>
+</body>
+</html>
