@@ -14,6 +14,7 @@ fonts/*.woff2             ← IBM Plex Sans + JetBrains Mono, latin + cyrillic, 
 scripts/build.mjs         ← zero-dependency build
 dist/                     ← built output, committed so consumers need no build step
 demo/index.html           ← live demo with fake telemetry
+ROADMAP.md                ← where this is going
 ```
 
 `dist/` contains:
