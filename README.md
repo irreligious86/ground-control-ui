@@ -62,7 +62,7 @@ npm i github:irreligious86/ground-control-ui#v0.1.0
 
 Flash is tight, so pick what you need:
 
-- Tokens + components only: `tokens.css` + `ground-control.js` ≈ 15 KB, fonts fall back to `system-ui` / `ui-monospace`.
+- Tokens + components only: `tokens.css` + `ground-control.js` ≈ 8 KB, fonts fall back to `system-ui` / `ui-monospace`.
 - Latin-only fonts add ~80 KB, all eight files ~130 KB. Serve them gzip-compressed with long cache headers.
 
 ### Offline PWA notes
