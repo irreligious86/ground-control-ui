@@ -7,12 +7,12 @@
 <link rel="stylesheet" href="../dist/ground-control.css">
 <script src="../dist/ground-control.js" defer></script>
 <style>
-  main { max-width: 960px; margin: 0 auto; padding: var(--space-6) 16px; }
-  header { display: flex; justify-content: space-between; align-items: center; gap: var(--space-4); flex-wrap: wrap; margin-bottom: var(--space-6); }
+  main { max-width: 960px; margin: 0 auto; padding: var(--gc-space-6) 16px; }
+  header { display: flex; justify-content: space-between; align-items: center; gap: var(--gc-space-4); flex-wrap: wrap; margin-bottom: var(--gc-space-6); }
   h1, h2 { margin: 0; }
-  section { margin-bottom: var(--space-6); }
-  h2 { margin-bottom: var(--space-4); }
-  .row { display: flex; gap: var(--space-2); flex-wrap: wrap; align-items: center; }
+  section { margin-bottom: var(--gc-space-6); }
+  h2 { margin-bottom: var(--gc-space-4); }
+  .row { display: flex; gap: var(--gc-space-2); flex-wrap: wrap; align-items: center; }
 </style>
 </head>
 <body class="gc-root">
@@ -61,6 +61,59 @@
   <section class="gc-panel">
     <div class="gc-label gc-muted">Position</div>
     <div class="gc-data">50.4501 N&nbsp;&nbsp;30.5234 E&nbsp;&nbsp;·&nbsp;&nbsp;HDG 274°</div>
+  </section>
+
+  <section>
+    <h2 class="gc-title">Navigation</h2>
+    <nav class="gc-nav" aria-label="Demo sections">
+      <a href="#" aria-current="page">Overview</a>
+      <a href="#">Telemetry</a>
+      <a href="#">Missions</a>
+      <a href="#">Logs</a>
+      <a href="#">Settings</a>
+    </nav>
+    <p class="gc-breadcrumb"><a href="#">Home</a><a href="#">Missions</a><span>042</span></p>
+  </section>
+
+  <section>
+    <h2 class="gc-title">Cards, tags, progress</h2>
+    <div class="gc-grid">
+      <a class="gc-card" href="#">
+        <strong>Pre-flight check</strong>
+        <div class="gc-card__meta"><span class="gc-tag" data-state="ok">DONE</span><span class="gc-tag">L1</span></div>
+      </a>
+      <a class="gc-card" href="#">
+        <strong>Failsafe test</strong>
+        <div class="gc-card__meta"><span class="gc-tag" data-state="info">IN PROGRESS</span><span class="gc-tag">L1</span></div>
+      </a>
+      <div class="gc-card" data-state="pending">
+        <strong>Night flight</strong>
+        <div class="gc-card__meta"><span class="gc-tag" data-state="caution">PLANNED</span></div>
+      </div>
+    </div>
+    <p class="gc-label gc-muted">Mission progress 60%</p>
+    <div class="gc-progress" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" aria-label="Mission progress" style="--gc-value: 60%"></div>
+  </section>
+
+  <section>
+    <h2 class="gc-title">Checklist</h2>
+    <ul class="gc-checklist">
+      <li><label><input type="checkbox" checked><span>Props off on the bench</span></label></li>
+      <li><label><input type="checkbox"><span>Failsafe tested with the switch</span></label></li>
+      <li><label><input type="checkbox"><span>Battery voltage logged</span></label></li>
+    </ul>
+  </section>
+
+  <section class="gc-panel gc-prose">
+    <h2>Prose</h2>
+    <p>Long-form text for articles, docs and reports. Inline <code>rpm_filter_min_hz</code>, <strong>bold</strong> and <a href="#">links</a>.</p>
+    <ul><li>Lists keep comfortable spacing</li><li>Code blocks scroll instead of breaking the layout</li></ul>
+    <pre><code>set dshot_bidir = ON
+set motor_poles = 14
+save</code></pre>
+    <div class="gc-callout" data-state="caution">Remove props before any motor test.</div>
+    <table><thead><tr><th>Band</th><th>Before</th><th>After</th></tr></thead>
+      <tbody><tr><td>80–150 Hz</td><td>+44.5 dB</td><td>−1.0 dB</td></tr></tbody></table>
   </section>
 </main>
 <script>

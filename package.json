@@ -1,6 +1,6 @@
 {
   "name": "ground-control-ui",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Dark-first design system for ground stations, telemetry and field reports: tokens, offline fonts, web components.",
   "type": "module",
   "main": "dist/ground-control.js",

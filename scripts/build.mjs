@@ -21,25 +21,44 @@ const first = themes[0].id;
 const colorVal = (t, theme) => (typeof t.value === 'string' ? (theme === first ? t.value : null) : t.value[theme] ?? null);
 const resolve = (v) => (/^\{.+\}$/.test(v) ? `var(--${v.slice(1, -1)})` : v);
 
+// All tokens are emitted as --gc-<name>. The unprefixed names from v0.1 are kept as
+// deprecated aliases so existing consumers don't break; they will be removed in v1.0.
+const legacy = [];
+// Spacing/radius names that existed in v0.1 (only these get unprefixed aliases).
+const V01_NAMES = new Set(['space-1', 'space-2', 'space-4', 'space-6', 'radius-sm', 'radius-md', 'radius-lg']);
 let css = banner;
 css += `:root, [data-theme="${first}"] {\n`;
-for (const t of tokens.color.tokens) css += `  --${t.name}: ${resolve(colorVal(t, first))};\n`;
+for (const t of tokens.color.tokens) {
+  css += `  --gc-${t.name}: ${resolve(colorVal(t, first))};\n`;
+  legacy.push(t.name);
+}
 css += `}\n`;
 for (const th of themes.slice(1)) {
   css += `[data-theme="${th.id}"] {\n`;
   for (const t of tokens.color.tokens) {
     const v = colorVal(t, th.id);
-    if (v) css += `  --${t.name}: ${resolve(v)};\n`;
+    if (v) css += `  --gc-${t.name}: ${resolve(v)};\n`;
   }
   css += `}\n`;
 }
 css += `:root {\n`;
-for (const fam of ['spacing', 'radius']) for (const t of tokens[fam]?.tokens ?? []) css += `  --${t.name}: ${t.value};\n`;
-for (const [k, v] of Object.entries(tokens.type.families)) css += `  --font-${k}: ${v};\n`;
+for (const fam of ['spacing', 'radius']) {
+  for (const t of tokens[fam]?.tokens ?? []) {
+    css += `  --gc-${t.name}: ${t.value};\n`;
+    if (V01_NAMES.has(t.name)) legacy.push(t.name);
+  }
+}
+for (const [k, v] of Object.entries(tokens.type.families)) {
+  css += `  --gc-font-${k}: ${v};\n`;
+  legacy.push(`font-${k}`);
+}
+css += `}\n`;
+css += `/* deprecated v0.1 aliases — use --gc-* instead; removed in v1.0 */\n:root {\n`;
+for (const n of legacy) css += `  --${n}: var(--gc-${n});\n`;
 css += `}\n`;
 for (const g of tokens.type.groups) {
   for (const s of g.styles) {
-    css += `.gc-${s.name} {\n  font-family: var(--font-${s.family ?? g.family});\n  font-size: ${s.fontSize};\n  line-height: ${s.lineHeight};\n  font-weight: ${s.fontWeight};\n`;
+    css += `.gc-${s.name} {\n  font-family: var(--gc-font-${s.family ?? g.family});\n  font-size: ${s.fontSize};\n  line-height: ${s.lineHeight};\n  font-weight: ${s.fontWeight};\n`;
     if (s.letterSpacing) css += `  letter-spacing: ${s.letterSpacing};\n`;
     if (s.name === 'label') css += `  text-transform: uppercase;\n`;
     if (g.family === 'mono') css += `  font-variant-numeric: tabular-nums;\n`;

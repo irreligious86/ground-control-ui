@@ -9,7 +9,7 @@ Dark-first design system for ground stations, telemetry dashboards and field rep
 ```
 tokens/tokens.json        ← single source of truth (edit this)
 src/components/*.js       ← web components (vanilla, Shadow DOM)
-src/css/base.css          ← page base + helpers (.gc-root, .gc-panel, .gc-grid)
+src/css/base.css          ← page base + class-based primitives (.gc-root, .gc-prose, .gc-nav, …)
 fonts/*.woff2             ← IBM Plex Sans + JetBrains Mono, latin + cyrillic, OFL
 scripts/build.mjs         ← zero-dependency build
 dist/                     ← built output, committed so consumers need no build step
@@ -48,13 +48,13 @@ Live updates: `document.querySelector('gc-telemetry-tile').value = 23.7`.
 
 ```bash
 git submodule add git@github.com:irreligious86/ground-control-ui.git vendor/ground-control-ui
-cd vendor/ground-control-ui && git checkout v0.1.0
+cd vendor/ground-control-ui && git checkout v0.2.0
 ```
 
 **npm from git** (for projects with a bundler):
 
 ```bash
-npm i github:irreligious86/ground-control-ui#v0.1.0
+npm i github:irreligious86/ground-control-ui#v0.2.0
 ```
 
 **Copy `dist/`** — for ESP32 (LittleFS / PROGMEM) and Home Assistant `www/`.
@@ -113,3 +113,23 @@ The visual reference and brand book live in the Ground Control design system art
 ## License
 
 Code: private, all rights reserved. Fonts: SIL Open Font License 1.1 (see `fonts/OFL-*.txt`).
+
+## CSS primitives (no JS)
+
+| Class | Use |
+|---|---|
+| `.gc-root` | page base: background, ink, font, focus ring, link colours |
+| `.gc-container`, `.gc-stack` | centred reading column; vertical rhythm |
+| `.gc-panel`, `.gc-grid` | raised panel; responsive grid |
+| `.gc-nav` | top navigation, scrolls horizontally on phones; mark the current link with `aria-current="page"` |
+| `.gc-breadcrumb` | path with `›` separators |
+| `.gc-card` | panel that can be an `<a>`; `data-state="pending"` for not-yet-available items |
+| `.gc-tag` | small mono chip; `data-state` = `ok`/`info`/`caution`/`critical`, always with text |
+| `.gc-progress` | bar: `role="progressbar"` + `style="--gc-value: 40%"` |
+| `.gc-checklist` | `<ul>` of `<label><input type=checkbox><span>…</span></label>` |
+| `.gc-prose` | long-form text: headings, lists, code, tables, blockquote |
+| `.gc-callout` | note block inside prose; `data-state` = `ok`/`caution`/`critical` |
+
+## Tokens
+
+All CSS variables are prefixed: `--gc-surface-100`, `--gc-ink`, `--gc-space-4`, `--gc-font-mono`. The unprefixed v0.1 names still work as deprecated aliases until v1.0.

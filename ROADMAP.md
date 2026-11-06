@@ -15,11 +15,12 @@ Ground Control UI is the single design system for all my projects: UAV tools, ES
 ## Done
 
 - [x] **v0.1.0** — tokens (dark theme), self-hosted fonts, `gc-button`, `gc-status-badge`, `gc-telemetry-tile`, zero-dep build, demo.
+- [x] **v0.2.0** — first real consumer (UAV Student): `--gc-*` namespace with v0.1 aliases, filled spacing scale, content and navigation primitives (prose, nav, breadcrumb, card, tag, progress, checklist, callout).
 
 ## Next
 
-### v0.2 — first real consumer
-- [ ] Integrate into Report UAV as a git submodule; replace hard-coded colours with tokens.
+### v0.2.x — more consumers
+- [ ] Integrate into Report UAV as a git submodule; replace hard-coded colours with tokens (use `--gc-*` names).
 - [ ] Add service-worker precache list for `dist/` to the README.
 - [ ] Fix whatever the first real project exposes.
 
