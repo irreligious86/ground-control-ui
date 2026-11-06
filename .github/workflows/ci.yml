@@ -1,0 +1,50 @@
+# CI for Ground Control UI.
+# 1. dist/ must be rebuilt and committed together with source changes.
+# 2. On main, when package.json version has no matching tag yet, tag it (vX.Y.Z).
+#    Consumers pin tags, so a version bump in package.json is the release trigger.
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: write
+
+jobs:
+  build-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+
+      - name: Rebuild dist
+        run: node scripts/build.mjs
+
+      - name: dist must match source
+        run: |
+          if [ -n "$(git status --porcelain -- dist)" ]; then
+            echo "::error::dist/ is stale. Run 'node scripts/build.mjs' and commit the result."
+            git status --short -- dist
+            exit 1
+          fi
+
+      - name: Tag release from package.json version
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          VERSION="v$(node -p "require('./package.json').version")"
+          if git rev-parse -q --verify "refs/tags/$VERSION" >/dev/null; then
+            echo "Tag $VERSION already exists, nothing to release."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git tag -a "$VERSION" -m "Release $VERSION"
+          git push origin "$VERSION"
+          echo "Released $VERSION"

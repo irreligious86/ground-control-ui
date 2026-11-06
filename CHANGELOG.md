@@ -9,6 +9,7 @@ First real consumer: UAV Student (educational site).
 - New class-based primitives (no JS): `.gc-container`, `.gc-stack`, `.gc-nav`, `.gc-breadcrumb`, `.gc-tag` (+`data-state`), `.gc-card` (+`data-state="pending"`), `.gc-progress` (`--gc-value`), `.gc-checklist`, `.gc-prose` (headings, lists, code, tables, blockquote), `.gc-callout`.
 - Link colours are scoped to `.gc-root`, nothing leaks into the host page.
 - Demo extended with all new primitives.
+- CI: checks that `dist/` matches the source; tags a release automatically when `package.json` version changes.
 
 ## v0.1.0 — 2026-10-19
 

@@ -133,3 +133,7 @@ Code: private, all rights reserved. Fonts: SIL Open Font License 1.1 (see `fonts
 ## Tokens
 
 All CSS variables are prefixed: `--gc-surface-100`, `--gc-ink`, `--gc-space-4`, `--gc-font-mono`. The unprefixed v0.1 names still work as deprecated aliases until v1.0.
+
+## Releasing
+
+Bump `version` in `package.json`, rebuild (`node scripts/build.mjs`), commit, push to `main`. CI verifies `dist/` and creates the `vX.Y.Z` tag itself.

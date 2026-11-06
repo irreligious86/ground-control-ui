@@ -41,4 +41,4 @@ Ground Control UI is the single design system for all my projects: UAV tools, ES
 - [ ] Home Assistant custom cards (generator / EcoFlow load).
 - [ ] Daylight theme with high contrast for direct sunlight.
 - [ ] Logo and cover mark.
-- [ ] Automated check that `dist/` matches the source (CI).
+- [x] Automated check that `dist/` matches the source (CI); release tag created automatically from `package.json` version.
