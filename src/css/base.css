@@ -1,5 +1,8 @@
 
 /* ---------- base ---------- */
+/* Components below set display; keep the native hidden attribute authoritative. */
+[hidden] { display: none !important; }
+
 .gc-root, body.gc-root {
   margin: 0;
   background: var(--gc-surface-100);

@@ -48,13 +48,13 @@ Live updates: `document.querySelector('gc-telemetry-tile').value = 23.7`.
 
 ```bash
 git submodule add git@github.com:irreligious86/ground-control-ui.git vendor/ground-control-ui
-cd vendor/ground-control-ui && git checkout v0.2.0
+cd vendor/ground-control-ui && git checkout v0.2.1
 ```
 
 **npm from git** (for projects with a bundler):
 
 ```bash
-npm i github:irreligious86/ground-control-ui#v0.2.0
+npm i github:irreligious86/ground-control-ui#v0.2.1
 ```
 
 **Copy `dist/`** — for ESP32 (LittleFS / PROGMEM) and Home Assistant `www/`.

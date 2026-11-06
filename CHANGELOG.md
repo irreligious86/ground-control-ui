@@ -1,5 +1,9 @@
 # Changelog
 
+## v0.2.1 — 2026-11-07
+
+- Fix: `[hidden]` now always hides elements, even ones with `display` set by Ground Control classes (e.g. `.gc-tag`). Found by UAV Student.
+
 ## v0.2.0 — 2026-11-07
 
 First real consumer: UAV Student (educational site).
